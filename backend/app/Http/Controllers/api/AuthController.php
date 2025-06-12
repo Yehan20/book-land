@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api\V1;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
@@ -67,7 +67,7 @@ class AuthController extends Controller
         }
 
         // Login success and user is authorized return the user with a cookie
-        $cookie = $this->getCookie($token);
+        $cookie =  cookie('jwt_token', $token, 120, '/', 'localhost', false, true, false, 'lax');
 
         $user = Auth::user();
         return response()->json([

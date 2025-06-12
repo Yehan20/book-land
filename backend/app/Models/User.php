@@ -72,10 +72,22 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    // Custom attribute to fetch the role
     public function roleName(): Attribute
     {
         return Attribute::make(
             get: fn() =>  $this->roles->pluck('name')->first()
         );
+    }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class);
+    }
+
+    // Check if user is admin
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
     }
 }
