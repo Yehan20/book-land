@@ -27,7 +27,7 @@ function Header() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component="nav" position="static">
+      <AppBar component="nav"  position="fixed">
         <Toolbar
           sx={{
 
