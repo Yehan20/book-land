@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Book;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BookSeeder extends Seeder
@@ -27,12 +26,12 @@ class BookSeeder extends Seeder
             ['title' => 'Sherlock Holmes: The Hound of the Baskervilles', 'genre' => 'thriller'],
         ];
 
-          Book::factory()->create([
-                'title' => $books[0]['title'],
-                'genre' => $books[0]['genre']
-            ]);
+        Book::factory()->create([
+            'title' => $books[0]['title'],
+            'genre' => $books[0]['genre'],
+        ]);
         // foreach ($books as $book) {
-          
+
         // }
     }
 }

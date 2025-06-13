@@ -12,8 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Book extends Model implements HasMedia
 {
-  
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
         'author_id',
@@ -26,7 +25,7 @@ class Book extends Model implements HasMedia
     ];
 
     protected $casts = [
-        'available'=>'boolean'
+        'available' => 'boolean',
     ];
 
     public function registerMediaCollections(): void
@@ -39,7 +38,8 @@ class Book extends Model implements HasMedia
         return $this->belongsTo(Author::class);
     }
 
-    public function users():BelongsToMany {
-         return $this->belongsToMany(User::class)->withPivot('is_returned', 'date_of_borrow','date_of_return');
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withPivot('is_returned', 'date_of_borrow', 'date_of_return');
     }
 }

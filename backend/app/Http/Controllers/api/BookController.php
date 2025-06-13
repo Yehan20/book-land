@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\UnauthorizedException;
 
-
 class BookController extends Controller
 {
-
     // Instansiate the service
     public function __construct(
         protected BookService $bookService
@@ -26,9 +24,11 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-      
-        $params = $request->query('author');
-   
+
+
+        // access query params of author and avaiablty
+        $params = $request->only(['author', 'available']);
+
         return BookResource::collection($this->bookService->all($params));
     }
 
@@ -37,7 +37,7 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        
+
         Gate::authorize('create', Book::class);
 
         $validated = $request->validated();
@@ -61,7 +61,6 @@ class BookController extends Controller
      */
     public function update(BookRequest $request, int $id)
     {
-       
 
         $validated = $request->validated();
 
@@ -85,11 +84,11 @@ class BookController extends Controller
     public function rentBook(int $id)
     {
         $book = Book::findOrFail($id);
-        if (!$book->available) {
+        if (! $book->available) {
             throw new UnauthorizedException('Book is rented already');
         }
 
-        $book  = $this->bookService->rentBook($book, Auth::user());
+        $book = $this->bookService->rentBook($book, Auth::user());
 
         return new BookResource($book);
     }
@@ -101,18 +100,18 @@ class BookController extends Controller
 
         Gate::authorize('returnBook', $book);
 
-        $book  = $this->bookService->returnBook($book, Auth::user());
+        $book = $this->bookService->returnBook($book, Auth::user());
 
         return new BookResource($book);
     }
 
     public function getUserBooksHistory()
     {
-        return  BookResource::collection($this->bookService->getUserBooksHistory());
+        return BookResource::collection($this->bookService->getUserBooksHistory());
     }
 
     public function getUserRentedBooks()
     {
-        return  BookResource::collection($this->bookService->getUserRentedBooks());
+        return BookResource::collection($this->bookService->getUserRentedBooks());
     }
 }

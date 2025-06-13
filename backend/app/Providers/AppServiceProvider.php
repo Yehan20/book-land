@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
             return new AuthorService($app->make(AuthorRepositoryInterface::class));
         });
 
-        //Register telescope
+        // Register telescope
         if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);

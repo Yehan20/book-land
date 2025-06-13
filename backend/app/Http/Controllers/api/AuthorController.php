@@ -8,15 +8,13 @@ use App\Http\Resources\AuthorResource;
 use App\Models\Author;
 use App\Services\AuthorService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class AuthorController extends Controller
 {
-    // Injected the Service 
+    // Injected the Service
     public function __construct(
         protected AuthorService $authorService
     ) {}
-
 
     /**
      * Display a listing of the resource.
@@ -24,7 +22,7 @@ class AuthorController extends Controller
     public function index()
     {
         //
-        return  AuthorResource::collection($this->authorService->all());
+        return AuthorResource::collection($this->authorService->all());
     }
 
     /**
@@ -63,6 +61,6 @@ class AuthorController extends Controller
 
     public function getDropdown()
     {
-        return  AuthorDropdownResource::collection($this->authorService->dropdown());
+        return AuthorDropdownResource::collection($this->authorService->dropdown());
     }
 }

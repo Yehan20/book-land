@@ -39,14 +39,13 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
 
     //  Assign role after creation
     public function configure(): static
-
     {
         return $this->afterMaking(function (User $user) {})->afterCreating(function (User $user) {
             $roleName = Role::where('name', 'customer')->first();

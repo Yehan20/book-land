@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, SoftDeletes;
+    use HasFactory, HasRoles, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +27,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
     ];
+
     protected $appends = ['role_name'];
 
     /**
@@ -76,13 +77,13 @@ class User extends Authenticatable implements JWTSubject
     public function roleName(): Attribute
     {
         return Attribute::make(
-            get: fn() =>  $this->roles->pluck('name')->first()
+            get: fn () => $this->roles->pluck('name')->first()
         );
     }
 
     public function books()
     {
-        return $this->belongsToMany(Book::class);
+        return $this->belongsToMany(Book::class)->withPivot('is_returned', 'date_of_borrow', 'date_of_return');;
     }
 
     // Check if user is admin

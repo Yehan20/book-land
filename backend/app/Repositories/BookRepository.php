@@ -5,9 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\BookRepositoryInterface;
 use App\Models\Book;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
 class BookRepository implements BookRepositoryInterface
@@ -15,23 +13,27 @@ class BookRepository implements BookRepositoryInterface
     /**
      * Create a new class instance.
      */
-    public function __construct()
-    {
-     
-    }
- 
+    public function __construct() {}
+
     // Retrive all books with paginatpr
-    public function allPaginated(string|null $params): LengthAwarePaginator
+    public function allPaginated(?array $params): LengthAwarePaginator
     {
         $books = Book::query();
 
         $books->with('author', 'media');
+      
+        // Filer based on the query params
 
-        if ($params) {
+        if (isset($params['author'])) {
 
             $books->withWhereHas('author', function ($query) use ($params) {
-                $query->where('name', $params);
+                $query->where('name', $params['author']);
             });
+        }
+
+        if (isset($params['available'])) {
+
+            $books->where('available', filter_var($params['available'], FILTER_VALIDATE_BOOLEAN));
         }
 
         return $books->paginate(10)->withQueryString();
@@ -50,7 +52,7 @@ class BookRepository implements BookRepositoryInterface
 
         $book->update($data);
 
-        return  $book;
+        return $book;
     }
 
     // Delete a book
@@ -60,11 +62,11 @@ class BookRepository implements BookRepositoryInterface
 
         return $book->delete();
     }
-  
+
     //  Find a single book
     public function find(int $id): Book
     {
-        return Book::findOrFail($id);
+        return Book::findOrFail($id)->load('author','media');
     }
 
     //  Rend a book
@@ -73,18 +75,23 @@ class BookRepository implements BookRepositoryInterface
         $user->books()->attach($bookId, $data);
     }
 
-    // Return a rendted book
-    public function returnBookByUser(int $bookId, int  $userId, array $data): void
+    // Return a rented book
+    public function returnBookByUser(int $bookId, int $userId, array $data): void
     {
         DB::table('book_user')->where('user_id', $userId)->where('book_id', $bookId)->where('is_returned', 0)->update($data);
     }
 
-    
     // Get Books based on users conditons
     public function getBooksByUser(User $user, string $condition = ''): LengthAwarePaginator
     {
 
-        $bookQuery = $user->books();
+        $bookQuery = $user->books()->withPivot([
+            'is_returned',
+            'date_of_borrow',
+            'date_of_return',
+            'deadline',
+            'is_returned'
+        ]);
         if ($condition === 'rented') {
 
             $bookQuery->wherePivot('is_returned', 0);

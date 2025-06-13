@@ -13,14 +13,12 @@ use Illuminate\Support\Facades\DB;
 
 class BookService
 {
-
-    // Initialize the instance 
+    // Initialize the instance
     public function __construct(
         protected BookRepositoryInterface $bookRepository
     ) {}
 
-
-    public function all($params): LengthAwarePaginator
+    public function all(array $params = []): LengthAwarePaginator
     {
         return $this->bookRepository->allPaginated($params);
     }
@@ -33,7 +31,8 @@ class BookService
             if ($file) {
                 $book->addMediaFromRequest('book_image')->toMediaCollection('books');
             }
-            return $book;
+
+            return $book->load(['author','media']);
         });
     }
 
@@ -42,7 +41,7 @@ class BookService
         return $this->bookRepository->find($id);
     }
 
-    public function update(array $data, int $id, UploadedFile|null $file): Book
+    public function update(array $data, int $id, ?UploadedFile $file): Book
     {
 
         // Update the book if new image is sent perform an image upload
@@ -56,10 +55,9 @@ class BookService
         });
     }
 
-
     public function delete(int $id): bool
     {
-        return  $this->bookRepository->delete($id);
+        return $this->bookRepository->delete($id);
     }
 
     public function rentBook(Book $book, User $user): Book
@@ -67,12 +65,11 @@ class BookService
 
         return DB::transaction(function () use ($book, $user) {
 
-            // Genrate date
+            // Generate date
             $dateOfBorrow = Carbon::now()->toDateString();
 
             // updates the book vairalbe with updated book returned from the method
             $book = $this->bookRepository->update(['available' => false], $book->id);
-
 
             $this->bookRepository->rentBookByUser($user, $book->id, [
                 'date_of_borrow' => $dateOfBorrow,
@@ -80,7 +77,7 @@ class BookService
                 'is_returned' => false,
             ]);
 
-            return $book;
+            return $book->load(['author','media']);
         });
     }
 
@@ -88,7 +85,7 @@ class BookService
     {
         return DB::transaction(function () use ($book, $user) {
 
-            $dateOfReturn =  Carbon::now()->toDateString();
+            $dateOfReturn = Carbon::now()->toDateString();
             $book = $this->bookRepository->update(['available' => true], $book->id);
 
             $this->bookRepository->returnBookByUser($book->id, $user->id, [
@@ -96,7 +93,7 @@ class BookService
                 'is_returned' => true,
             ]);
 
-            return $book;
+            return $book->load(['author','media']);
         });
     }
 
@@ -106,7 +103,7 @@ class BookService
         return $this->bookRepository->getBooksByUser(Auth::user(), 'rented');
     }
 
-    // 
+    //
     public function getUserBooksHistory(): LengthAwarePaginator
     {
         // Retrvie the user's book activity history from the repository

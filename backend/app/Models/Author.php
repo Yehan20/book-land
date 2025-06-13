@@ -9,16 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Author extends Model
 {
-   
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
-    public function books():HasMany {
+    public function books(): HasMany
+    {
 
-        return  $this->hasMany(Book::class);
+        return $this->hasMany(Book::class);
     }
-    
 }

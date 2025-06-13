@@ -23,7 +23,7 @@ class BookRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules =  [
+        $rules = [
             'author_id' => ['required', 'exists:authors,id'],
             'title' => ['required', 'string'],
             'ISBN' => ['required', 'unique:books,ISBN'],

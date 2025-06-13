@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Author;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,13 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       
-       // Initilize mock up date
+
+        // Initilize mock up date
         $this->call([
-           RoleSeeder::class,
-           AuthorSeeder::class,
-           CustomerSeeder::class,
-           BookSeeder::class,
+            RoleSeeder::class,
+            AuthorSeeder::class,
+            CustomerSeeder::class,
+            BookSeeder::class,
         ]);
     }
 }

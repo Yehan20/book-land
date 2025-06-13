@@ -9,7 +9,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class AuthorService
 {
-
     // Initialize the repoisiotr
     public function __construct(
         protected AuthorRepositoryInterface $authorRepository
@@ -27,7 +26,7 @@ class AuthorService
 
     public function delete(int $id): bool
     {
-        return  $this->authorRepository->delete($id);
+        return $this->authorRepository->delete($id);
     }
 
     public function all(): LengthAwarePaginator
@@ -39,7 +38,6 @@ class AuthorService
     {
         return $this->authorRepository->dropdown();
     }
-
 
     public function find(int $id): Author
     {
