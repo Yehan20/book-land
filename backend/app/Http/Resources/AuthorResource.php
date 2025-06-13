@@ -26,7 +26,7 @@ class AuthorResource extends JsonResource
                 'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
                 'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
                 'deleted_at' => Carbon::parse($this->deleted_at)->toDateTimeString(),
-            ])
+            ]),
 
         ];
     }

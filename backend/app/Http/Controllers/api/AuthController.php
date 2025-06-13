@@ -16,7 +16,6 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-
     // Registration Method
     public function register(RegisterRequest $request)
     {
@@ -45,10 +44,9 @@ class AuthController extends Controller
             'user' => $user->load('roles'),
             'authorisation' => [
                 'type' => 'bearer',
-            ]
+            ],
         ])->withCookie($cookie);
     }
-
 
     // Login method
     public function login(LoginRequest $request)
@@ -59,7 +57,7 @@ class AuthController extends Controller
 
         $token = Auth::attempt($credentials);
 
-        if (!$token) {
+        if (! $token) {
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Unauthorized',
@@ -67,14 +65,15 @@ class AuthController extends Controller
         }
 
         // Login success and user is authorized return the user with a cookie
-        $cookie =  cookie('jwt_token', $token, 120, '/', 'localhost', false, true, false, 'lax');
+        $cookie = cookie('jwt_token', $token, 120, '/', 'localhost', false, true, false, 'lax');
 
         $user = Auth::user();
+
         return response()->json([
             'data' => $user->load('roles'),
             'authorisation' => [
                 'type' => 'bearer',
-            ]
+            ],
         ])->withCookie($cookie);
     }
 
@@ -85,6 +84,7 @@ class AuthController extends Controller
 
         try {
             JWTAuth::setToken($token)->invalidate();
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully logged out',
@@ -108,7 +108,7 @@ class AuthController extends Controller
             'authorisation' => [
                 'token' => $newToken,
                 'type' => 'bearer',
-            ]
+            ],
         ]);
     }
 
@@ -118,13 +118,14 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => Auth::user()->load('roles')
+            'data' => Auth::user()->load('roles'),
         ]);
     }
 
-    // Creates a cookie 
-    private function getCookie($token) {
-         return   cookie('jwt_token', $token, 120, '/', 'localhost', false, true, false, 'lax');
+    // Creates a cookie
+    private function getCookie($token)
+    {
+        return cookie('jwt_token', $token, 120, '/', 'localhost', false, true, false, 'lax');
 
     }
 }

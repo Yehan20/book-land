@@ -3,11 +3,9 @@
 namespace App\Repositories;
 
 use App\Interfaces\AuthorRepositoryInterface;
-
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-
 
 class AuthorRepository implements AuthorRepositoryInterface
 {
@@ -26,11 +24,10 @@ class AuthorRepository implements AuthorRepositoryInterface
     }
 
     // Get author list for drop down
-    public function dropdown():Collection
+    public function dropdown(): Collection
     {
-        return Author::all(['name','id']);
+        return Author::all(['name', 'id']);
     }
-
 
     // Create author
     public function create(array $data): Author

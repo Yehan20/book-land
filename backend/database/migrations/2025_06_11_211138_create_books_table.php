@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2); // 8 digits in total, 2 after the decimal
             // $table->integer('stock')->min(0)->default(1); // 8 digits in total, 2 after the decimal
             $table->boolean('available')->default(true);
-            $table->enum('genre',['fantasy', 'science fiction', 'mystery', 'thriller', 'romance', 'historical fiction', 'horror'])->nullable();
+            $table->enum('genre', ['fantasy', 'science fiction', 'mystery', 'thriller', 'romance', 'historical fiction', 'horror'])->nullable();
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Book;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class BookPolicy
 {
@@ -73,6 +72,6 @@ class BookPolicy
         }
 
         // Check if the book is rented by the specific user and its not returned
-        return  $book->users()->wherePivot('user_id', $user->id)->wherePivot('is_returned', 0)->exists();
+        return $book->users()->wherePivot('user_id', $user->id)->wherePivot('is_returned', 0)->exists();
     }
 }

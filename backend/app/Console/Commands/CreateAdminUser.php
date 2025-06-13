@@ -27,12 +27,11 @@ class CreateAdminUser extends Command
     /**
      * Execute the console command.
      */
-       public function handle()
+    public function handle()
     {
         $email = $this->option('email');
         $name = $this->option('name');
 
-       
         $validator = Validator::make([
             'email' => $email,
             'name' => $name,
@@ -45,6 +44,7 @@ class CreateAdminUser extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return 1;
         }
 
@@ -60,12 +60,14 @@ class CreateAdminUser extends Command
         if ($adminRole) {
             $user->assignRole($adminRole);
         } else {
-            $this->error("Admin role not found. Please run the RoleSeeder first.");
+            $this->error('Admin role not found. Please run the RoleSeeder first.');
+
             return 1;
         }
 
         $this->info("Admin user created successfully with email: {$email}");
-        $this->info("Default password is: password");
+        $this->info('Default password is: password');
+
         return 0;
     }
 }

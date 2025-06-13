@@ -18,7 +18,7 @@ class JwtVerifyMiddleware
     {
         $token = $request->cookie('jwt_token');
 
-        if (!$token) {
+        if (! $token) {
             return response()->json(['error' => 'Token not found'], 401);
         }
 

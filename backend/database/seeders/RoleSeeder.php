@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -16,7 +15,7 @@ class RoleSeeder extends Seeder
         $roles = ['admin', 'customer'];
 
         foreach ($roles as $role) {
-            Role::create([ 'name' => $role]);
+            Role::create(['name' => $role]);
         }
     }
 }

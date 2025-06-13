@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'regex:/^\S+$/', 'unique:users,name'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'string', 'min:6'],
-            'is_customer'=>['nullable','boolean']
+            'is_customer' => ['nullable', 'boolean'],
         ];
     }
 }
