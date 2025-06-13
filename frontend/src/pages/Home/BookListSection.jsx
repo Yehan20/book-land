@@ -51,6 +51,7 @@ const BookList = () => {
   // Reset all filters
   const handleReset = () => {
     setSelectedAuthor('');
+    setSelectedAvailability('')
     setPage(1);
   };
 
