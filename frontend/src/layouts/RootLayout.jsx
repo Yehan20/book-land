@@ -6,13 +6,18 @@ import { Container } from '@mui/material'
 
 
 const RootLayout = () => {
-  
+
     return (
         <React.Fragment>
             <Header />
-             <Container sx={{ paddingTop:10 }}>
+            <Container sx={{
+                paddingTop: {
+                    xs: '200px', 
+                    md: 10       
+                }
+            }}>
                 <Outlet />
-             </Container>
+            </Container>
             <Footer />
         </React.Fragment>
     )

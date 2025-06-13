@@ -51,6 +51,7 @@ const BookList = () => {
   // Reset all filters
   const handleReset = () => {
     setSelectedAuthor('');
+    setSelectedAvailability('')
     setPage(1);
   };
 
@@ -153,7 +154,7 @@ const BookList = () => {
               sx={{
                 padding: '5px 15px',
                 alignSelf: { xs: 'stretch', md: 'auto' },
-                ml: { xs: 0, md: 'auto' }, // margin-left: auto on md and up
+                ml: {}, // margin-left: auto on md and up
               }}
               onClick={() => setShowModal(true)}
             >
@@ -161,13 +162,15 @@ const BookList = () => {
             </Button>
 
           )}
-          {showModal && <AddBookModal onClose={() => setShowModal(false)} authors={authors} />}
-          {/*Custom model*/}
 
-          {/* Custom alert */}
-          {toastConfig && <CustomizedSnackbar message={toastConfig.message} variant={toastConfig.type} />}
+
 
         </Stack>
+        {/* Custom alert */}
+        {toastConfig && <CustomizedSnackbar message={toastConfig.message} variant={toastConfig.type} />}
+        {showModal && <AddBookModal onClose={() => setShowModal(false)} authors={authors} />}
+        {/*Custom model*/}
+
 
         <Divider />
         {bookContent}
