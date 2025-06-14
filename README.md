@@ -75,11 +75,12 @@ git remote add origin https://github.com/<your-github-username>/<your-repo-name>
    composer install
    ```
 
-5. Generate app key and jwt secret key from the following commands:
+5. Generate app key and JWT secret key and create a symbolic link. Run the following commands one after another:
 
    ```bash
    php artisan key:generate
    php artisan jwt:secret
+   php artisan storage:link
    ```
 
 6. Run migrations and seeders to generate mock data to get the application ready:
