@@ -5,15 +5,19 @@ A full-stack book rental system built using **React + Redux Toolkit (Frontend)**
 ## Main Features
 
 - View paginated list of books
+- View Customer rented list of books
 - Filter by author or availability
-- Add new books via form
+- Add new books via form (Admin only)
 - Rent and return books
-- Redux Toolkit
+- JWT authentication 
+- Role based access(Customer Admin)
+
+## Tools and Technologies
+
 - Laravel backend with Repository & Service pattern
-- JWT authentication (optional)
-- Material UI for a polished, responsive frontend
-- Loading states, error handling, and toast notifications
-- Admin and User based access
+- React 
+- Redux Toolkit
+- Material UI 
 
 ## Setup Instructions
 
@@ -159,7 +163,13 @@ git remote add origin https://github.com/<your-github-username>/<your-repo-name>
 
 ##  Screenshots
 
-<img src="ui/Screen-05.JPG" width="500"/>
+<img src="ui/Screen-05.JPG" width="500" alt="book list"/>
 
-<img src="ui/Screen-06.JPG"  width="500"/>
+<img src="ui/Screen-06.JPG"  width="500" alt="book detial"/>
+
+<img src="ui/Screen-03.JPG"  width="500" alt="book detials book"/>
+
+<img src="ui/Screen-04.JPG"  width="500" alt="rented books"/>
+
+
 
